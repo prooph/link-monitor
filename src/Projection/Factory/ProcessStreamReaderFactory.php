@@ -18,7 +18,7 @@ use Zend\ServiceManager\ServiceLocatorInterface;
  * Class ProcessStreamReaderFactory
  *
  * @package Prooph\Link\Monitor\Projection\Factory
- * @author Alexander Miertsch <alexander.miertsch.extern@sixt.com>
+ * @author Alexander Miertsch <kontakt@codeliner.ws>
  */
 final class ProcessStreamReaderFactory implements FactoryInterface
 {

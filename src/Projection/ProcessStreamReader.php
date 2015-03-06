@@ -19,7 +19,7 @@ use Prooph\EventStore\Stream\StreamName;
  * Class ProcessStreamReader
  *
  * @package Prooph\Link\Monitor\Projection
- * @author Alexander Miertsch <alexander.miertsch.extern@sixt.com>
+ * @author Alexander Miertsch <kontakt@codeliner.ws>
  */
 final class ProcessStreamReader
 {
