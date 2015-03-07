@@ -56,10 +56,11 @@ final class ProcessesOverviewController extends AbstractWidgetController impleme
         $this->addProcessNames($lastLoggedProcesses);
 
         return DashboardWidget::initialize(
-            'prooph/link/monitor/process-view/partial/process-list',
-            $this->translator->translate('Workflow Monitor'),
-            12,
-            ['processes' => $lastLoggedProcesses]
+            $this->widgetConfig->get('template', 'prooph/link/monitor/process-view/partial/process-list'),
+            $this->widgetConfig->get('title', $this->translator->translate('Workflow Monitor')),
+            $this->widgetConfig->get('cols', 12),
+            ['processes' => $lastLoggedProcesses],
+            $this->widgetConfig->get('group_title')
         );
     }
 
