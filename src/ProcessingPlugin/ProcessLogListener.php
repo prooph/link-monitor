@@ -11,12 +11,12 @@
 
 namespace Prooph\Link\Monitor\ProcessingPlugin;
 
+use Prooph\Common\Event\ActionEvent;
 use Prooph\Processing\Environment\Environment;
 use Prooph\Processing\Environment\Plugin;
 use Prooph\Processing\Processor\ProcessId;
 use Prooph\Link\Monitor\Model\ProcessLogger;
 use Prooph\EventStore\PersistenceEvent\PostCommitEvent;
-use Zend\EventManager\Event;
 
 /**
  * Class ProcessLogListener
@@ -63,15 +63,15 @@ final class ProcessLogListener implements Plugin
      */
     public function registerOn(Environment $workflowEnv)
     {
-        $workflowEnv->getWorkflowProcessor()->events()->attach('process_was_started_by_message', [$this, 'onProcessWasStartedByMessage']);
-        $workflowEnv->getWorkflowProcessor()->events()->attach('process_did_finish', [$this, 'onProcessDidFinish']);
-        $workflowEnv->getEventStore()->getPersistenceEvents()->attach('commit.post', [$this, 'onEventStorePostCommit']);
+        $workflowEnv->getWorkflowProcessor()->events()->attachListener('process_was_started_by_message', [$this, 'onProcessWasStartedByMessage']);
+        $workflowEnv->getWorkflowProcessor()->events()->attachListener('process_did_finish', [$this, 'onProcessDidFinish']);
+        $workflowEnv->getEventStore()->getActionEventDispatcher()->attachListener('commit.post', [$this, 'onEventStorePostCommit']);
     }
 
     /**
-     * @param Event $e
+     * @param ActionEvent $e
      */
-    public function onProcessWasStartedByMessage(Event $e)
+    public function onProcessWasStartedByMessage(ActionEvent $e)
     {
         $this->processLogger->logProcessStartedByMessage(
             ProcessId::fromString($e->getParam('process_id')),
@@ -85,19 +85,19 @@ final class ProcessLogListener implements Plugin
     public function onEventStorePostCommit(PostCommitEvent $e)
     {
         foreach ($e->getRecordedEvents() as $recordedEvent) {
-            if ($recordedEvent->eventName()->toString() === 'Prooph\Processing\Processor\Event\ProcessWasSetUp') {
+            if ($recordedEvent->messageName() === 'Prooph\Processing\Processor\Event\ProcessWasSetUp') {
                 $this->processLogger->logProcessStartedAt(
                     ProcessId::fromString($recordedEvent->payload()['aggregate_id']),
-                    $recordedEvent->occurredOn()
+                    $recordedEvent->createdAt()
                 );
             }
         }
     }
 
     /**
-     * @param Event $e
+     * @param ActionEvent $e
      */
-    public function onProcessDidFinish(Event $e)
+    public function onProcessDidFinish(ActionEvent $e)
     {
         if ($e->getParam('succeed')) {
             $this->processLogger->logProcessSucceed(

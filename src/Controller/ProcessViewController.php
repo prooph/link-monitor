@@ -11,6 +11,7 @@
 
 namespace Prooph\Link\Monitor\Controller;
 
+use Prooph\Common\Messaging\DomainEvent;
 use Prooph\Link\Application\Service\AbstractQueryController;
 use Prooph\Link\Application\Service\TranslatorAwareController;
 use Prooph\Link\Application\SharedKernel\LocationTranslator;
@@ -21,7 +22,6 @@ use Prooph\Processing\Processor\ProcessId;
 use Prooph\Processing\Processor\Task\TaskListPosition;
 use Prooph\Link\Monitor\Model\ProcessLogger;
 use Prooph\Link\Monitor\Projection\ProcessStreamReader;
-use Prooph\EventStore\Stream\StreamEvent;
 use Verraes\ClassFunctions\ClassFunctions;
 use Zend\Mvc\I18n\Translator;
 use Zend\View\Model\ViewModel;
@@ -136,7 +136,7 @@ final class ProcessViewController extends AbstractQueryController implements Tra
     }
 
     /**
-     * @param StreamEvent[] $streamEvents
+     * @param DomainEvent[] $streamEvents
      * @return array
      */
     private function convertToClientProcessEvents(array $streamEvents)
@@ -145,10 +145,10 @@ final class ProcessViewController extends AbstractQueryController implements Tra
 
         foreach ($streamEvents as $streamEvent) {
             $clientEvent = [
-                'name' => ClassFunctions::short($streamEvent->eventName()->toString()),
+                'name' => ClassFunctions::short($streamEvent->messageName()),
                 'process_id' => $streamEvent->metadata()['aggregate_id'],
                 'payload' => $streamEvent->payload(),
-                'occurred_on' => $streamEvent->occurredOn()->format(\DateTime::ISO8601),
+                'occurred_on' => $streamEvent->createdAt()->format(\DateTime::ISO8601),
             ];
 
             $taskListPosition = null;

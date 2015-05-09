@@ -75,10 +75,10 @@ final class DbalProcessLogger implements ProcessLogger
      * If a new process needs to be created set status to "running".
      *
      * @param ProcessId $processId
-     * @param \DateTime $startedAt
+     * @param \DateTimeImmutable $startedAt
      * @return void
      */
-    public function logProcessStartedAt(ProcessId $processId, \DateTime $startedAt)
+    public function logProcessStartedAt(ProcessId $processId, \DateTimeImmutable $startedAt)
     {
         $data = [
             'started_at' => $startedAt->format(\DateTime::ISO8601),
@@ -100,10 +100,10 @@ final class DbalProcessLogger implements ProcessLogger
      * Set status to "succeed".
      *
      * @param ProcessId $processId
-     * @param \DateTime $finishedAt
+     * @param \DateTimeImmutable $finishedAt
      * @return void
      */
-    public function logProcessSucceed(ProcessId $processId, \DateTime $finishedAt)
+    public function logProcessSucceed(ProcessId $processId, \DateTimeImmutable $finishedAt)
     {
         $data = [
             'finished_at' => $finishedAt->format(\DateTime::ISO8601),
@@ -124,10 +124,10 @@ final class DbalProcessLogger implements ProcessLogger
      * Set status to "failed".
      *
      * @param ProcessId $processId
-     * @param \DateTime $finishedAt
+     * @param \DateTimeImmutable $finishedAt
      * @return void
      */
-    public function logProcessFailed(ProcessId $processId, \DateTime $finishedAt)
+    public function logProcessFailed(ProcessId $processId, \DateTimeImmutable $finishedAt)
     {
         $data = [
             'finished_at' => $finishedAt->format(\DateTime::ISO8601),

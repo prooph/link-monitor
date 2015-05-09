@@ -30,6 +30,6 @@ final class ProcessStreamReaderFactory implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        return new ProcessStreamReader($serviceLocator->get('prooph.event_store'));
+        return new ProcessStreamReader($serviceLocator->get('proophessor.event_store'));
     }
 }

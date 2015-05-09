@@ -10,9 +10,9 @@
  */
 namespace Prooph\Link\Monitor\Projection;
 
+use Prooph\Common\Messaging\DomainEvent;
 use Prooph\Processing\Processor\ProcessId;
 use Prooph\EventStore\EventStore;
-use Prooph\EventStore\Stream\StreamEvent;
 use Prooph\EventStore\Stream\StreamName;
 
 /**
@@ -39,7 +39,7 @@ final class ProcessStreamReader
     /**
      * @param ProcessId $processId
      * @param int $minVersion
-     * @return StreamEvent[]
+     * @return DomainEvent[]
      */
     public function getStreamOfProcess(ProcessId $processId, $minVersion = 0)
     {

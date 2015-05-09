@@ -44,30 +44,30 @@ interface ProcessLogger
      * If a new process needs to be created set status to "running".
      *
      * @param ProcessId $processId
-     * @param \DateTime $startedAt
+     * @param \DateTimeImmutable $startedAt
      * @return void
      */
-    public function logProcessStartedAt(ProcessId $processId, \DateTime $startedAt);
+    public function logProcessStartedAt(ProcessId $processId, \DateTimeImmutable $startedAt);
 
     /**
      * Create or update entry for process with finished at information.
      * Set status to "succeed".
      *
      * @param ProcessId $processId
-     * @param \DateTime $finishedAt
+     * @param \DateTimeImmutable $finishedAt
      * @return void
      */
-    public function logProcessSucceed(ProcessId $processId, \DateTime $finishedAt);
+    public function logProcessSucceed(ProcessId $processId, \DateTimeImmutable $finishedAt);
 
     /**
      * Create or update entry for process with finished at information.
      * Set status to "failed".
      *
      * @param ProcessId $processId
-     * @param \DateTime $finishedAt
+     * @param \DateTimeImmutable $finishedAt
      * @return void
      */
-    public function logProcessFailed(ProcessId $processId, \DateTime $finishedAt);
+    public function logProcessFailed(ProcessId $processId, \DateTimeImmutable $finishedAt);
 
     /**
      * Orders process logs by started_at DESC
