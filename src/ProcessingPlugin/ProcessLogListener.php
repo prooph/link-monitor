@@ -87,7 +87,7 @@ final class ProcessLogListener implements Plugin
         foreach ($e->getRecordedEvents() as $recordedEvent) {
             if ($recordedEvent->messageName() === 'Prooph\Processing\Processor\Event\ProcessWasSetUp') {
                 $this->processLogger->logProcessStartedAt(
-                    ProcessId::fromString($recordedEvent->payload()['aggregate_id']),
+                    ProcessId::fromString($recordedEvent->metadata()['aggregate_id']),
                     $recordedEvent->createdAt()
                 );
             }
@@ -102,12 +102,12 @@ final class ProcessLogListener implements Plugin
         if ($e->getParam('succeed')) {
             $this->processLogger->logProcessSucceed(
                 ProcessId::fromString($e->getParam('process_id')),
-                \DateTime::createFromFormat(\DateTime::ISO8601, $e->getParam('finished_at'))
+                \DateTimeImmutable::createFromFormat(\DateTime::ISO8601, $e->getParam('finished_at'))
             );
         } else {
             $this->processLogger->logProcessFailed(
                 ProcessId::fromString($e->getParam('process_id')),
-                \DateTime::createFromFormat(\DateTime::ISO8601, $e->getParam('finished_at'))
+                \DateTimeImmutable::createFromFormat(\DateTime::ISO8601, $e->getParam('finished_at'))
             );
         }
     }

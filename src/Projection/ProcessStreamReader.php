@@ -44,7 +44,7 @@ final class ProcessStreamReader
     public function getStreamOfProcess(ProcessId $processId, $minVersion = 0)
     {
         return $this->eventStore->loadEventsByMetadataFrom(
-            new StreamName('process_stream'),
+            new StreamName('prooph_processing_stream'),
             ['aggregate_id' => $processId->toString()],
             $minVersion
         );
