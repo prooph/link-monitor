@@ -1,6 +1,6 @@
 Prooph\Link\Monitor
 ===================
-Process monitor for [prooph LINK](https://github.com/prooph/link)
+[deprecated] Process monitor for [prooph LINK](https://github.com/prooph/link)
 
 # Process Monitoring
 Without a reliable process monitoring tool automated workflow processing would end up in chaos. Therefor, prooph LINK ships with this wonderful monitor module. It adds a monitoring widget to the dashboard which lists the last three processes and offers a details view for each process with a list of all performed tasks and potential errors.
